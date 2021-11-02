@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+треки
+{% for m in trak1 %}
+<li>{{m.author}}</li>
+<li>{{m.name_trak}}</li>
+	{% if m.audio %}
+		<audio controls><source src="{{m.audio.url}}" type="audio/mpeg"></audio>
+	{% endif %}
+{% endfor %}
+
+    </body>
+</html>

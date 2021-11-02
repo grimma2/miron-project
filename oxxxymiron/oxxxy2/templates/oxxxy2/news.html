@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+новости
+{% for d in news1 %}
+	<li>{{ d.title_news }}</li> <a href= '{{d.slug}}'><button type='submit'>смотреть</button></a>
+	{{d.pub_date}}
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+
+
+{% for d in paginator.page_range %}
+	{% if d in page_obj.number == d %}
+		<li>{{d}}</li>
+	{% elif d >= page_obj.number|add:-2 %}
+	
+		<a href="?page={{ d }}">{{ d }}</a>
+	{% endif %}
+{% endfor %}
+
+{% endif %}
+	
+
+
+
+
+    </body>
+</html>

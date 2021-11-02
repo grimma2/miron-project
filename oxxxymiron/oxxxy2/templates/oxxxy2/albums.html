@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+альбомы
+{% for m in albums1 %}
+<li>{{ m.title_album }}</li>
+<li>{{ m.description_album }}</li>
+{% endfor %}
+
+    </body>
+</html>

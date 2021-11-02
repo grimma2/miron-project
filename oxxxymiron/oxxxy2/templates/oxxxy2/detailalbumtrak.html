@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>{{ a.title_album }}</title>
+    </head>
+    <body>
+<h1>{{a.title_album}}</h1>
+<p>{{a.description_album}}</p>
+<p>{{ a.name_trak1 }}</p>
+{% for a in b %}
+<p>{{ a.author }}</p>
+<p>{{ a.name_trak1 }}</p>
+{% if a.audio %}
+	<audio controls><source src="{{a.audio.url}}" type="audio/mpeg"></audio>
+{% endif %}
+{% endfor %}
+
+    </body>
+</html>

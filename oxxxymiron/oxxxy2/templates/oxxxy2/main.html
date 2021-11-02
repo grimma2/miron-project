@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+		<link href="{% static 'oxxxy2/css/main.css' %}" rel="stylesheet" type="text/css"/>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+<div id="container">
+	<div id="main-image">gg</div>
+</div>
+
+треки
+{% for i in trak %}
+	<li>{{ i.author }}</li>
+	<li>{{ i.name_trak }}</li>
+	{% if i.audio %}
+		<audio controls><source src="{{i.audio.url}}" type="audio/mpeg"></audio>
+	{% endif %}
+{% endfor %}
+<a href= 'oxxxy2/traks'><button type='submit'>треки</button></a><br>
+
+новости
+{% for d in news %}
+	<li>{{ d.title_news }}</li> <a href= '{% url "detail_news" d.slug %}'><button type='submit'>смотреть</button></a>
+	<li>{{ d.text }}</li>
+{% endfor %}
+<a href= 'oxxxy2/news'><button type='submit'>новости</button></a><br>
+
+
+{% if request.user.is_authenticated %}
+
+<a href='{% url "formnews1" %}'><h2><button type='submit'>создать новость</button></h2></a>
+
+{% endif %}
+
+{% if request.user.is_authenticated %}
+	{{ user.username }} <a href="{% url 'logout' %}">Выйти</a>
+{% else %}
+	<a href="{% url 'register' %}"><button type="submit">Регистрация</button></a>
+	<a href="{% url 'login' %}"><button type="submit">Войти</button></a>
+{% endif %}
+
+    </body>
+</html>

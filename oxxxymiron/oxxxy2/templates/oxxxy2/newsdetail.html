@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>{{ detail_news1.slug }}</title>
+    </head>
+    <body>
+<h1>{{detail_news1.title_news}}</h1>
+<p>{{detail_news1.text}}</p>
+<p>{{detail_news1.pub_date}}</p>
+	{% if detail_news1.photo %}
+		<img src="{{detail_news1.photo.url}}">
+	{% endif %}
+
+
+    </body>
+</html>

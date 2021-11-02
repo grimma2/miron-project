@@ -1,0 +1,12 @@
+#container{
+	width: 100%;
+	height: 100vh;
+	background: url(https://gamebomb.ru/files/galleries/001/6/6f/244815.jpg) center no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;}
+
+#main-image{
+	width:100%;
+	max-width: 1200px;
+	margin: 0 auto;	
+	}
