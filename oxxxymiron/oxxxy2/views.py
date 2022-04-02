@@ -1,65 +1,66 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView
-from .models import *
-from django.utils import timezone
 from .forms import *
 from django.urls import reverse_lazy
-from django.core.paginator import Paginator
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 
 
 def main(request):
-	print(request)
 	news = News.objects.all()[:3]
-	trak = Trak.objects.all()[:3]
-	albums = Album.objects.all()
-	return render(request, 'oxxxy2/main.html', {'news': news, 'trak': trak, 'albums': albums, 'title': 'Главная страница'})
+	traks = Trak.objects.all()[:3]
+	albums = Album.objects.all()[:3]
 
-class Newsd(ListView):
-	paginate_by = 4
+	return render(
+		request, 'oxxxy2/index.html', {'news': news, 'traks': traks, 'albums': albums}
+	)
+
+
+class NewsList(ListView):
 	model = News
 	template_name = 'oxxxy2/news.html'
-	context_object_name = 'news1'
+	context_object_name = 'news'
 
 
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['title'] = 'Новости'
-		return context
-	
+def traks(request):
+	traks = Trak.objects.all()
+	return render(request, 'oxxxy2/traks.html', {'traks': traks, 'title': 'треки'})
 
-def trak(request):
-	print(request.user.first_name)
-	trak1 = Trak.objects.all()
-	return render(request, 'oxxxy2/traks.html', {'trak1': trak1, 'title': 'треки'})
+
+class Albums(ListView):
+	model = Album
+	template_name = 'oxxxy2/albumlist.html'
+	context_object_name = 'albums'
+
+
+class DetailTrak(DetailView):
+	model = Trak
+	template_name = 'oxxxy2/trakdetail.html'
+	context_object_name = 'trak'
+
 
 class DetailNews(DetailView):
 	model = News
 	template_name = 'oxxxy2/newsdetail.html'
-	context_object_name = 'detail_news1'
+	context_object_name = 'news'
+
+
+class DetailAlbum(DetailView):
+	model = Album
+	template_name = 'oxxxy2/albumdetail.html'
+	context_object_name = 'album'
 
 	def get_context_data(self, **kwargs):
-		slug = self.object.get_absolute_url(self.object.slug)
 		context = super().get_context_data(**kwargs)
+		context['album_traks'] = self.object.trak_set.all()
 
 		return context
-
-
-
 
 
 class NewsForm(CreateView):
 	form_class = CreateNewsForm
 	template_name = 'oxxxy2/newsform.html'
 
-	def get_context_data(self, *, object_list=None, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['title'] = 'Добавление Новости'
-		return context
 
 class Register(CreateView):
 	form_class = UserRegister
@@ -69,7 +70,6 @@ class Register(CreateView):
 	def form_valid(self, form):
 		user = form.save()
 		login(self.request, user)
-		print(**form.cleaned_data)
 		return redirect('main')
 
 
